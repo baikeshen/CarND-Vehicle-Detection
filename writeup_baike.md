@@ -70,19 +70,23 @@ In the section titled "Train a Classifier" ( cell of `[8]` of [CarND Vehicle Det
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search. How did you decide what scales to search and how much to overlap windows?
 
-My first approach to implement sliding windows was to calculate all the windows and then apply the feature extraction to each one of them to find the one containing a car. It is implemented on `In [8]`. Cells `In [9]` and `In [10]` contains the code for loading the test images, applying the classifier to the images and drawing boxes. The scales and overlap parameter where found by experimenting on them until a successful result was found. The following image shows the results of this experimentation on the test images:
+In the section titled ` Using Classifier to detect cars in the images ` (cell of `[9]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb ),  the method find_cars from the lesson materials has been adapted. The method combines spatial features, histogram features and HOG feature extraction with a sliding window search, but rather than perform HOG feature extraction on each window individually which can be time consuming, the HOG features are extracted for the entire image (or a selected portion of it) and then these full-image features are subsampled according to the size of the window and then fed to the classifier. The method performs the classifier prediction on the all three features (spatial, histogram, and HOG) for each window region and returns a list of rectangle objects corresponding to the windows that generated a positive ("car") prediction.
 
-![Sliding windows first implementation](images/sliding_windows.png)
-
-To combine the boxes found there and eliminate some false positives, a heat map as implemented with a threshold and the function `label()` from `scipy.ndimage.measurements` was used to find where the cars we. The code for this implementation could be found on `In [13]`, and the next image shows the results on the test images:
-
-![Sliding windows with heatmap and threshold](images/withheatmap.png)
+Several configuration of windows sizes and positions with various overlaps in the X and Y directions have been explored. My observations are as follows:
+ - Too many false postives with small (0.5) scales;
+ -  75% overlap produced more redundant true positive detections than 50% overlap
+ - An appropriate vertical range of image should be considered for each windows size (e.g. smaller range for smaller scales) to reduce the chance for false positives in areas where cars at that scale are unlikely to appear
+- A true positive is typically accompanied by several positive detections, while false positives are typically accomnpnaied by one or two detections. So a combined heatmap and threshold is good enough to differentiate the two. 
+ 
+ The code for the implementation of bapplying Heatmap and threshold can be found from cell ` [9] ` to cell ` [11] ` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb) )
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working. What did you do to optimize the performance of your classifier?
 
-The performance of the method calculating HOG on each particular window was slow. To improve the processing performance, a HOG sub-sampling was implemented as suggested on Udacity's lectures. The implementation of this method could be found on `In [14]`. The following image shows the results applied to the test images (the same heatmap and threshold procedure was applied as well on `In [15]`):
+After implementing each individual functions, a whole pipline has been built and the code is contained in the cell ` [14]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb) ). The following image shows the results applied to the test images with implementation of heatmap and threshold:
 
-![Sliding windows with HOG sub-sampling](images/hog_subsampling.png)
+![Peformance of Pipeline of Finding cars](./misc/Find_Car_HeatMap_Threshold.JPG)
+
+It is a really time consuming to calculate HOG on each particular window. a HOG sub-sampling was implemented as suggested on Udacity's lectures. To further optimize the performance, changes to swind sizing and overlap as described above and lowering the heatmap threshols to improve the accracy of detection have been applied, 
 
 ### Video implementation
 
