@@ -92,7 +92,7 @@ It is a really time consuming to calculate HOG on each particular window. a HOG 
 
 #### 1. Provide a link to your final video output. Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-The video output could be found [project_video.mp4](video_output/project_video.mp4)
+The video output could be found [project_video.mp4](project_video_output.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some filter for false positives and some method for combining overlapping bounding boxes.
 
