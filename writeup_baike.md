@@ -1,4 +1,4 @@
-# Vehicle Detection Project
+# CarND Vehicle Detection Project
 
 ## Goals
 
@@ -20,35 +20,37 @@ Here I will consider the rubric points individually and describe how I addressed
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.
 
 You're reading it!
-The project code could be found on the [Vehicle Detection notebook](Vehicle%20Detection.ipynb).
+All of the code for the project is contained in the [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb).
 
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The training images are loaded at `In [2]`:
+My first step is to load all of the vehicle and non-vehicle image paths from the provided dataset. A random sample of images from both car and non-car dataset are shown below, respectively:
+
+![Roandom Car images](./misc/Car_Visualization.JPG)
+
+![Roandom Car images](./misc/NonCar_Visualization.JPG)
+
+The total nummber of the training images is:
 
 - Vehicle train images count: 8792
 - Non-vehicle train image count: 8968
 
-Here is an example of those images:
+The feature extraction code (spatial, color and HOG) is contained In cell `[4]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb). By using the method of ` get_hog_features `, a comparsion of a car image and its associated histogram of oriented gradients, as well as the same for a non-car image are shown as below:
 
-![Vehicle and non-vehicle images](images/vehicle-non-vehicle.png)
+![HOG Vehicle and non-vehicle images](./misc/comparsion_Hog_features.JPG)
 
-The feature extraction code (spatial, color and HOG) is at `In [4]`. This cell contains a set of functions provided by Udacity's lectures to extract the features from an image. The function `extract_features` combine the other function and use the class `FeatureParameters` to hold all the parameters in a single place.
-
-Next image shows an example for HOG for a vehicle and non-vehicle calculated at `In [19]`:
-
-![HOG Vehicle and non-vehicle images](images/hog.png)
+In the cell of The method of `[6]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb), a function of extract_features  is to accept a list of image paths, spatial information, Histogram and HOG parameters ( as well as one of a variety of destination color spaces, to which the input image is converted) and produces a flattened array of spatial feature, histogram feature, or/and HOG features as defined for each image in the list.
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-The parameters were found by manually changing them and experimenting to try to maximize the model accuracy and minimize the fitting time. The final parameters are the following:
+The parameters were found by manually changing them and experimenting. My final choice of HOG parameters based upon the performance of the SVM classified produced using them. Not only the accuracy with which the classiefier made prediction on the test data, but also the speed at which the classifier is able to make predictions have been considered. The final parameters are the following:
 
 |Parameter|Value|
 |:--------|----:|
 |Color Space|YCrCb|
-|HOG Orient|8|
+|HOG Orient|11|
 |HOG Pixels per cell|8|
 |HOG Cell per block|2|
 |HOG Channels|All|
@@ -58,7 +60,7 @@ The parameters were found by manually changing them and experimenting to try to 
 |Classifier|LinearSVC|
 |Scaler|StandardScaler|
 
-With this parameters, the classifier accuracy was 99.41 % and it took 2.97 seconds to train.
+With this parameters, the classifier accuracy was 99.41 % , it took 2130.83 seconds to get features and 17.63 seconds to train SVC.
 
 ### Sliding Window Search
 
