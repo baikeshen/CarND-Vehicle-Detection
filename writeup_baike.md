@@ -99,17 +99,28 @@ The video output could be found [project_video.mp4](video_output/project_video.m
 Altough Some effort has been put to minimize false positives by using a heatmap and threshold in the pipeline, this is not good enough. The code for processing frames of video is contained in the cell `[14]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb) and is identical to the code for processing a single image decribed above, with the exception of storing the detections from prvious 10 frames of video. Rather than performing the heatmap/threshold/label steps for the current frame's detections, the detections for the past 10 frames are combined and added to the heatmap with a certain weights:
 
 '''
+
 car.ave_heatmap = car.ave_heatmap*0.3 + heatmap_final*0.7/len(car.heatmap)
+
 '''
 
 ### Discussion
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project. Where will your pipeline likely fail? What could you do to make it more robust?
 
-- Use a decision tree to analyze the redundancy on the feature vector and try to decrease its length eliminating redundancy.
 
-- The performance of the pipeline could be improved by trying to decrease the amount of space to search for windows.
+I have problem to improve the detection accuracy while implementing this project.To an certain degree, the accuracy of classifier has to be balanced with execution speed. As described above, integrating detection from previous frames could mitigate some misclassifications, but it has some potential to raise another issue: vehicles that significantly changes enviroments may tend to escape being label.
 
-- More than one scale could be used to find the windows and apply them on the heatmap.
+My pipline may fail in the following scenarios:
 
-- The windows size could change for different X and Y values to minimize the number of windows to process.
+- vehicles (such as HOG features) do not resemble those in the dataset;
+- some extreme lighting or enviromental conditions;
+- oncoming  cars as well as distant cars 
+
+I would like to implement the following to make the pipeline more robust:
+
+- use the vehicle location, speed, driving direction to prediect its location in the subsequent frames;
+- Using dynamic searching ranges to speed up execution;
+- The windows size could change for different X and Y values to minimize the number of windows to process;
+- Applying a convolution neural network together with the proposed traditional technical of computer version;
+
