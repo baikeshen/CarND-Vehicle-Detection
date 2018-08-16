@@ -96,7 +96,11 @@ The video output could be found [project_video.mp4](video_output/project_video.m
 
 #### 2. Describe how (and identify where in your code) you implemented some filter for false positives and some method for combining overlapping bounding boxes.
 
-Some effort was done already to minimize false positives using a heatmap and threshold in the pipeline, but it was not enough. The overlapping bounding boxes were resolved by using the function `label()` from `scipy.ndimage.measurements` to find the cars. To filter false positives, the image heatmap map was averaged over three consecutive frames. The implementation could be found on `In [25]`
+Altough Some effort has been put to minimize false positives by using a heatmap and threshold in the pipeline, this is not good enough. The code for processing frames of video is contained in the cell `[14]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb) and is identical to the code for processing a single image decribed above, with the exception of storing the detections from prvious 10 frames of video. Rather than performing the heatmap/threshold/label steps for the current frame's detections, the detections for the past 10 frames are combined and added to the heatmap with a certain weights:
+
+'''
+car.ave_heatmap = car.ave_heatmap*0.3 + heatmap_final*0.7/len(car.heatmap)
+'''
 
 ### Discussion
 
