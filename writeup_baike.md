@@ -41,7 +41,7 @@ The feature extraction code (spatial, color and HOG) is contained In cell `[4]` 
 
 ![HOG Vehicle and non-vehicle images](./misc/comparsion_Hog_features.JPG)
 
-In the cell of The method of `[6]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb), a function of extract_features  is to accept a list of image paths, spatial information, Histogram and HOG parameters ( as well as one of a variety of destination color spaces, to which the input image is converted) and produces a flattened array of spatial feature, histogram feature, or/and HOG features as defined for each image in the list.
+In the cell of `[6]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb), a function of extract_features  is to accept a list of image paths, spatial information, Histogram and HOG parameters ( as well as one of a variety of destination color spaces, to which the input image is converted) and produces a flattened array of spatial feature, histogram feature, or/and HOG features as defined for each image in the list.
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
@@ -60,7 +60,11 @@ The parameters were found by manually changing them and experimenting. My final 
 |Classifier|LinearSVC|
 |Scaler|StandardScaler|
 
-With this parameters, the classifier accuracy was 99.41 % , it took 2130.83 seconds to get features and 17.63 seconds to train SVC.
+With this parameters, it took 130.83 seconds to get features and 17.63 seconds to train SVC.
+
+#### 3.  Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+
+In the section titled "Train a Classifier" ( cell of `[8]` of [CarND Vehicle Detection notebook](Vehicle_detection_BK.ipynb) ). I trained a linear SVM with the default classifier parameters and using spatial intensity, chanell intensity histogram features , and HOG features and was able to achieve a test accuracy of 99.41%.
 
 ### Sliding Window Search
 
