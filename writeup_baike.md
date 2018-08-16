@@ -86,7 +86,7 @@ After implementing each individual functions, a whole pipline has been built and
 
 ![Peformance of Pipeline of Finding cars](./misc/Find_Car_HeatMap_Threshold.JPG)
 
-It is a really time consuming to calculate HOG on each particular window. a HOG sub-sampling was implemented as suggested on Udacity's lectures. To further optimize the performance, changes to swind sizing and overlap as described above and lowering the heatmap threshols to improve the accracy of detection have been applied, 
+It is a really time consuming to calculate HOG on each particular window. a HOG sub-sampling was implemented as suggested on Udacity's lectures. To further optimize the performance, changes to window sizing and overlap as described above and lowering the heatmap threshols to improve the accracy of detection have been applied, 
 
 ### Video implementation
 
